@@ -1,3 +1,27 @@
+/*
+Package backoff provides a backoff object that makes it easy to consistently
+apply exponential backoff with jitter.
+
+	Ex.
+	b, err := NewBackoff(
+	  WithInitialDelay(0),
+	  WithBaseDelay(time.Millisecond * 500),
+	  WithExponentialLimit(time.Second * 60), // stop growing exponentially after 1 min
+	)
+	if err != nil {
+	    log.Fatalln(err)
+	}
+	b.Sleep() // immediately retry because initial delay = 0
+	b.Sleep() // wait 425~575ms, base delay of 500ms +/- 15%, the default jitter
+	b.Sleep() // wait 850~1150ms  		~1s
+	b.Sleep() // wait 1700~2300ms 		~2s
+	b.Sleep() // wait 3400-4600ms 		~4s
+	b.Sleep() // wait 6800~9200ms 		~8s
+	b.Sleep() // wait 1360~1840ms 		~16s
+	b.Sleep() // wait 27200~36800ms 	~32s
+	b.Sleep() // wait 54400~73600ms 	~64s
+	b.Sleep() // wait 54400~73600ms 	~64s (stopped growing, jitter still applied)
+*/
 package backoff
 
 import (
