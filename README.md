@@ -1,15 +1,15 @@
 # Backoff
 
-## Purpose
-
-`backoff` is a tiny Go library enabling simple and consistent exponential backoff with jitter.
-
 ```go
 import (
     // ...
     "github.com/bitdabbler/backoff"
 )
 ```
+
+## Purpose
+
+`backoff` is a tiny Go library enabling simple and consistent exponential backoff with jitter.
 
 ## Basic Usage
 
