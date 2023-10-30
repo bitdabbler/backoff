@@ -13,17 +13,27 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
-
+    
     - name: Set up Go
       uses: actions/setup-go@v4
       with:
         go-version: ${{ env.GO_VERSION }}
     
-    - name: Run Test
+    - name: Run fmt
+      run: if [ "$(gofmt -s -l . | wc -l)" -gt 0 ]; then exit 1; fi
+    
+    - name: Run tests
       run: go test ./...
 
-    - name: Lint with staticcheck
+    - name: Run vet
+      run: go vet ./...
+
+    - name: Run staticcheck
       uses: dominikh/staticcheck-action@v1.3.0
       with:
         version: latest
         install-go: false
+
+    - id: govulncheck
+      name: Run govulncheck ./...
+      uses: golang/govulncheck-action@v1
