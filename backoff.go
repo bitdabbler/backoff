@@ -34,7 +34,7 @@ import (
 type backoffOption func(*Backoff, bool) error
 
 // Backoff provides exponential backoff with jitter. By default, the initial
-// backoff is 100ms, the jitter factor is 0.3 (so +/- 15%), and exponential grow
+// backoff is 100ms, the jitter factor is 0.3 (so +/- 15%), and exponential growth
 // stops once the backoff reaches 3 minutes.
 type Backoff struct {
 	delay        time.Duration
@@ -133,9 +133,9 @@ func WithBaseDelay(d time.Duration) backoffOption {
 }
 
 // WithExponentialLimit configuration BackoffOption allows customization of the
-// backoff delay beyond it stops growing exponentially. It is possible to set
+// backoff delay beyond which it stops growing exponentially. It is possible to set
 // the limit to 0, in which case the it will never grow beyond the base delay.
-// though jitter will still be applied in call cases. The default is 3 minutes.
+// though jitter will still be applied in all cases. The default is 3 minutes.
 func WithExponentialLimit(d time.Duration) backoffOption {
 	return func(b *Backoff, coerce bool) error {
 		if d >= 0 {
